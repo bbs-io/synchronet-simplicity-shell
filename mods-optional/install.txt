@@ -1,0 +1,32 @@
+Place all of the files in s3_utils.zip into your mods folder.
+
+for sys_ctrl_p.js and sys_ctrl-u.js, you will need to add a
+hotkey event for them, to replace the internal function in
+SCFG->External Programs=>Online Hot Key Events
+
+
+inc_dates.js
+	when included adds a formatDate() function to 
+    JavaScript Date() objects.
+               
+inc_menu.js
+	include file to make creating a Js shell easier.
+
+sys_ctrl_p.js
+	shell mod for ctrl-P, will display a shell's ctrl-P
+	or the default, if none exists.
+               
+sys_ctrl_u.js
+	shell mod for ctrl-U, will display a shell's ctrl-u
+	or the default if none exists.
+               
+login.js [optional]
+    replacement for login.src/bin, REQUIRES create_new_user.js
+    if you want synchronet's default newuser, comment out the
+    line specified, towards the beginning.
+    
+create_new_user.js
+    replacement for sync's internal bbs.newuser() method,
+    only asks the general questions for telnet, no address,
+    or phone #...  will send the user's password to them in
+    email.
