@@ -17,7 +17,7 @@ bbs.menu.show_simple(strMenu,strPrompt,arrOptions,arrCommands,iAction)
 	strPrompt  = The menu's prompt
 	arrOptions = an array of strings for commands that can be entered
 	iAction    = the action status to set the node to.
-	
+
 Changed a few file commands to use baja workarounds.
 *****************************************************************************/
 
@@ -109,7 +109,7 @@ bbs.menu.file_search_config = function() {
 	options['E'] = "user.settings^=USER_EXTDESC;console.print('\\r\\n\\1nExtended descriptions are now \\1h\\1b' + ((user.settings&USER_EXTDESC)?'ON':'OFF') + '\\1n.\\r\\n');";
 	options['Q'] = "return;";
 	options['\r'] = "return;";
-	
+
 	//basic menu, will display the menu text & prompt
 	//  then get the available input, and execute the associated command.
 	bbs.menu.show_simple("s3/files_search_config","File Search Config: ",options,NODE_XFER);
@@ -119,14 +119,12 @@ bbs.menu.file_search = function() {
 	//options and commands to perform
 	var options = new Array();
 	options['N'] = "bbs.scan_dirs(FL_ULTIME);";
-	//doesn't work   options['D'] = "console.print('\\r\\n\\1c\\1hFind Text in File Descriptions (no wildcards)\\r\\n\\1n: ');bbs.cmdstr(console.getstr(40));bbs.scan_dirs(FL_EXFIND);";
-	//doesn't work   options['F'] = "bbs.cmdstr(bbs.get_filespec());bbs.scan_dirs(0);";
-	options['D'] = "console.print('\\r\\n\\1c\\1hFind Text in File Descriptions (no wildcards)\\r\\n\\1n: ');bbs.menu.baja('file_find_text');";
-	options['F'] = "console.print('\\r\\n\\1n\\1c\\1hSearch for Filename(s)\\r\\n');bbs.menu.baja('file_find_name');";
+	options['D'] = "console.print('\\r\\n\\1c\\1hFind Text in File Descriptions (no wildcards)\\r\\n\\1n: ');bbs.cmdstr(console.getstr(40));bbs.scan_dirs(FL_EXFIND);";
+	options['F'] = "bbs.cmdstr(bbs.get_filespec());bbs.scan_dirs(0);";
 	options['C'] = "bbs.menu.file_search_config();";
 	options['Q'] = "return;";
 	options['\r'] = "return;";
-	
+
 	//basic menu, will display the menu text & prompt
 	//  then get the available input, and execute the associated command.
 	bbs.menu.show_simple("s3/files_search","File Search: ",options,NODE_XFER);
@@ -141,7 +139,7 @@ bbs.menu.file_info = function() {
 	options['Y'] = "bbs.user_info();";
 	options['Q'] = "return;";
 	options['\r'] = "return;";
-	
+
 	//basic menu, will display the menu text & prompt
 	//  then get the available input, and execute the associated command.
 	bbs.menu.show_simple("s3/files_info","Info: ",options,NODE_XFER);
@@ -163,15 +161,13 @@ bbs.menu.file = function() {
 	options['N'] = "bbs.scan_dirs(SCAN_NEW);";
 	options['S'] = "bbs.menu.file_search();";
 	options['C'] = "bbs.menu.file_search_config();";
-	//doesn't work....  options['V'] = "bbs.list_files(file_area.lib_list[bbs.curlib].dir_list[bbs.curdir].code);";
-	//doesn't work....  options['E'] = "bbs.list_file_info(file_area.lib_list[bbs.curlib].dir_list[bbs.curdir].code);";
-	options['V'] = "bbs.menu.baja(\"setstr *.*\\r\\nfile_list\");";
-	options['E'] = "console.print(\"l\\r\\n\1c\1hList Extended File Information\\r\\n\");bbs.menu.baja(\"getfilespec\\r\\nif_true\\r\\nfile_list_extended\\r\\nend_if\\r\\n\");";
+	options['V'] = "bbs.list_files(file_area.lib_list[bbs.curlib].dir_list[bbs.curdir].code);";
+	options['E'] = "bbs.list_file_info(file_area.lib_list[bbs.curlib].dir_list[bbs.curdir].code);";
 	options['T'] = "bbs.temp_xfer();";
 	options['A'] = "console.print('\\r\\n\\1c\\1hView File(s)\\r\\n'); bbs.list_files(bbs.curdir,FL_VIEW);";
 	options['R'] = "console.print('\\r\\n\\1c\\1hRemove/Edit File(s)\\r\\n'); file_remove(bbs.get_filespec());";
 	options['I'] = "bbs.menu.file_info();";
-	options['G'] = "console.print('\\r\\n\\1c\\1hDownload File(s)\\r\\n');bbs.menu.baja('\\r\\nfile_download_batch\\r\\nif_true\\r\\ngoto end\\r\\nend_if\\r\\ngetfilespec\\r\\nif_true\\r\\nfile_download\\r\\nend_if\\r\\n:end');";
+	options['G'] = "console.print('\\r\\n\\1c\\1hDownload File(s)\\r\\n');bbs.batch_download()";
 	options['/G'] = "console.print('\\r\\n\\1c\\1hDownload File(s) from User(s)\\r\\n');bbs.menu.baja('FILE_DOWNLOAD_USER');";
 	options['U'] = "console.print('\\r\\n\\1c\\1hUpload File.\\r\\n');bbs.upload_file('UPLOADS');";
 	options['/U'] = "console.print('\\r\\n\\1c\\1hUpload File to User.\\r\\n');bbs.upload_file('USER');";
@@ -196,7 +192,7 @@ bbs.menu.system = function() {
 	options['L'] = "bbs.list_logons();";
 	options['Q'] = "return;";
 	options['\r'] = "return;";
-	
+
 	bbs.menu.show_simple("s3/system","System: ",options,NODE_DFLT);
 }
 
@@ -216,7 +212,7 @@ bbs.menu.main = function() {
 	options[';'] = "if (user.compare_ars('SYSOP')) {console.print('\\r\\n\1nSysop Command: ');  bbs.exec('*str_cmds ' + console.getstr(40));}";
 	options['O'] = "bbs.logoff();";
 	options['/O'] = "bbs.hangup();";
-	
+
 	//run basic menu processor
 	bbs.menu.show_simple("s3/main","Main: ",options,NODE_MAIN);
 }

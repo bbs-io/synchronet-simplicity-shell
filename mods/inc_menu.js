@@ -52,14 +52,14 @@ bbs.menu.shell = user.command_shell; /*
 set shell reference, used for menu fallout for shell change
 	If the user.command_shell is different from THIS setting, it will drop out
 	of any loaded menus.  used for a config change.                         */
-	
+
 bbs.menu.findUser = function(inName) {
 //	finds username(s) from the inputed string
 //
 //	if a single match returns the user_id
 //	...or...
 //	displays matches found, returns 0
-	
+
 	var arrMatches = new Array();
 
 	if ((inName.indexOf("#") == 0)&&(!isNaN(inName.substring(1,inName.length)))) {
@@ -135,20 +135,20 @@ bbs.menu.findUser = function(inName) {
 	}
 	return iRet
 }
-	
+
 bbs.send_mail = function() {
 	//will get an email address from the user, and call netmail,
 	//or email as appropriate.
-	
+
 	var found = false; //input check
 	while (bbs.online && (!found)) {
 		//show input prompt.
 		console.print("\1n\r\n\1h\1yEnter username, or email address.\r\n\1n: ");
-		
+
 		//get email address
 		if (!bbs.menu.input) bbs.menu.input = "";
 		bbs.menu.input = console.getstr(bbs.menu.input,65,K_EDIT|K_LINE|K_AUTODEL).toLowerCase();
-		
+
 		var iUser = false; //for bbs email
 		if (bbs.menu.input == "")
 			found = true; //if blank, abort
@@ -160,7 +160,7 @@ bbs.send_mail = function() {
 				found = true; //user found.
 		}
 	}
-	
+
 	if (found) {
 		console.print("\r\n"); //spacer
 		if (iUser) {
@@ -174,8 +174,8 @@ bbs.send_mail = function() {
 bbs.menu.msg_select_subboard = function() {
 	//list and select a subboard for the current group
 	console.print("\1n\1l\1r" +
-		"ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß\r\n\1h\1y" + 
-		"  Sub-boards of " + msg_area.grp_list[bbs.curgrp].name + "\r\n\1n" + 
+		"ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß\r\n\1h\1y" +
+		"  Sub-boards of " + msg_area.grp_list[bbs.curgrp].name + "\r\n\1n" +
 		"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\r\n");
 	var grp_subs = msg_area.grp_list[bbs.curgrp].sub_list;
 	for (var i=0; i<grp_subs.length; i++)
@@ -190,14 +190,14 @@ bbs.menu.msg_select_subboard = function() {
 bbs.menu.msg_select_group = function() {
 	//list and select a group, then a subboard.
 	console.print("\1n\1l\1r" +
-		"ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß\r\n\1h\1y" + 
-		"  MESSAGE GROUPS                        \r\n\1n" + 
+		"ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß\r\n\1h\1y" +
+		"  MESSAGE GROUPS                        \r\n\1n" +
 		"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\r\n");
-		
+
 	var grp_list = msg_area.grp_list;
 	for (var i=0; i<grp_list.length; i++)
 		console.print("\1h\1y" + ((i==bbs.curgrp)?"* ":"  ") + ((i+1)+"   ").substr(0,2) +  "\1k - \1b" + grp_list[i].name + "\r\n");
-	
+
 	console.print("\1n\1h\1kÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\r\n");
 	console.print("\1nSelect a Group: ");
 	bbs.curgrp = console.getnum(grp_list.length)-1;
@@ -208,8 +208,8 @@ bbs.menu.file_select_directory = function() {
 	//list and select a directory for the current library
 	//list and select a subboard for the current group
 	console.print("\1n\1l\1r" +
-		"ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß\r\n\1h\1y" + 
-		"  Directories of " + file_area.lib_list[bbs.curlib].name + "\r\n\1n" + 
+		"ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß\r\n\1h\1y" +
+		"  Directories of " + file_area.lib_list[bbs.curlib].name + "\r\n\1n" +
 		"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\r\n");
 	var lib_dirs = file_area.lib_list[bbs.curlib].dir_list;
 	for (var i=0; i<lib_dirs.length; i++)
@@ -219,18 +219,18 @@ bbs.menu.file_select_directory = function() {
 	console.print('\1nSelect a Directory: ');
 	bbs.curdir = console.getnum(lib_dirs.length)-1;
 }
-	
+
 bbs.menu.file_select_library = function() {
 	//list and select a group, then a subboard.
 	console.print("\1n\1l\1r" +
-		"ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß\r\n\1h\1y" + 
-		"  FILE LIBRARIES                        \r\n\1n" + 
+		"ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß\r\n\1h\1y" +
+		"  FILE LIBRARIES                        \r\n\1n" +
 		"ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\r\n");
-		
+
 	var lib_list = file_area.lib_list;
 	for (var i=0; i<lib_list.length; i++)
 		console.print("\1h\1y" + ((i==bbs.curlib)?"* ":"  ") + ((i+1)+"   ").substr(0,2) +  "\1k - \1b" + lib_list[i].name + "\r\n");
-	
+
 	console.print("\1n\1h\1kÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\r\n");
 	console.print("\1nSelect a Library: ");
 	bbs.curlib = console.getnum(lib_list.length)-1;
@@ -239,7 +239,7 @@ bbs.menu.file_select_library = function() {
 
 bbs.menu.baja = function(input) {
 	// input is written to a temp file in the exec folder, compiled, run, then deleted
-	
+
 	var f = new File(system.exec_dir+"/temp_" + bbs.node_num + ".src")
 	if (!f.open("w")) { //should NEVER happen
 	    var errmsg = "!ERROR: Unable to write to temp file. (eval_baja:" + strFileName + ")";
@@ -249,14 +249,10 @@ bbs.menu.baja = function(input) {
 	}else{
 		f.write(input + "\r\n");
 		f.close();
-		
-		if (system.os_version.toLowerCase().indexOf("windows") >= 0)
-			bbs.exec("baja /o temp_" + bbs.node_num + ".src",0,system.exec_dir);
-		else
-			bbs.exec("baja /o temp_" + bbs.node_num + ".src",0,system.exec_dir);
-			
+
+	  bbs.exec("baja /o temp_" + bbs.node_num + ".src", EX_NATIVE, system.exec_dir);
 		bbs.exec("*temp_" + bbs.node_num);
-		
+
 		file_remove(system.exec_dir+"/temp_" + bbs.node_num + ".src");
 		file_remove(system.exec_dir+"/temp_" + bbs.node_num + ".bin");
 	}
@@ -265,11 +261,11 @@ bbs.menu.baja = function(input) {
 
 bbs.menu.mnu_number = function(inNumber,iMax) {
 	//gets numeric input for a menu prompt
-	
+
 	var sRet = "" + inNumber; //string to return
 	var bDone = false; //check for completion of input
-	
-	//show the starting number	
+
+	//show the starting number
 	console.print(inNumber);
 	while (bbs.online && (!bDone)) {
 		//if the length of the input matches a max value's length
@@ -280,7 +276,7 @@ bbs.menu.mnu_number = function(inNumber,iMax) {
 
 		//get input
 		var c = console.getkey();
-		
+
 		//if no input, sleep then continue
 		if (c == "") {
 			sleep(200);
@@ -292,7 +288,7 @@ bbs.menu.mnu_number = function(inNumber,iMax) {
 				case KEY_DEL:
 					//cut the length of the string.
 					sRet = sRet.substr(0,sRet.length-1);
-					
+
 					console.ansi_left(1);
 					console.print(" ");
 					console.ansi_left(1);
@@ -315,14 +311,14 @@ bbs.menu.mnu_number = function(inNumber,iMax) {
 			}
 		}
 	}
-	
+
 	if (sRet != "") {
 		//clear visible input, if needed, will be redrawn, by calling function.
 		console.ansi_left(sRet.length);
 		console.print("                                             ".substr(0,sRet.length));
 		console.ansi_left(sRet.length);
 	}
-	
+
 	//return input, or empty string.
 	return "" + sRet;
 }
@@ -336,7 +332,7 @@ bbs.menu.checkTimeout = function(reset) {
 	}
 	if (console.status&CON_NO_INACT)
 		return true; //no inactivity timeout set
-		
+
 	if (((console.timeout+bbs.timeout_warn)*1000) < (new Date()).valueOf()) {
 		console.line_counter = 0;
 		console.ansi_left(80);
@@ -347,12 +343,12 @@ bbs.menu.checkTimeout = function(reset) {
 				console.putmsg("\r\n" + bbs.text(558) + "\r\n");
 				bbs.hangup();
 			}
-				
+
 			sleep(250); //sleep 1/4 second
 		}
 		if (bbs.sys_status & SS_ABORT)
 			bbs.sys_status ^= SS_ABORT;
-			
+
 		bbs.menu.reprompt = true; //redraw menu prompt
 		console.line_counter = 0;
 		console.ansi_left(80);
@@ -362,47 +358,47 @@ bbs.menu.checkTimeout = function(reset) {
 
 bbs.menu.show_prompt = function(strMenu,strPrompt,arrOptions,number_max,iAction,bExpertPrompt) {
 	//display a menu, and promps, retrieve input, and return matching input.
-	
+
 	var cmd = "";
 	var cmd_set = false;
-	
+
 	var allow_numeric = !(!number_max);
 
 	bbs.menu.redraw = (user.settings&USER_EXPERT)?false:true; //Show Menu Text
 	bbs.menu.reprompt = true; //always draw prompt
-		
+
 	if (!bbs.menu.redraw)
 		/* Expert Mode Prompt */ console.print("\r\n\1n\1h\1k[\1n"+strMenu+"\1h\1k]  (\1b'\1y?\1b' help, '\1y=EXPERT\1b' toggle expert\1k)\1n\r\n");
-	
+
 	//bbs.menu.checkTimeout(true); //reset timeout
-		
+
 	while (bbs.online && !cmd_set) {
 		//at a dynamic prompt, no pauses needed
 		bbs.menu.prompt = true;
-		
+
 		//reset global expert_prompt setting.
 		if (bExpertPrompt)
 			bbs.menu.expertprompt = true;
 		else
 			bbs.menu.expertprompt = false;
 
-				
+
 		//display menu
 		if (bbs.menu.redraw) {
 			system.node_list[bbs.node_num-1].action = iAction;
-			
+
 			bbs.menu.redraw = false;
 			if (!bbs.menu.expertprompt)
 				bbs.menu.reprompt = true;
-				
+
 			var iTemp = console.screen_rows;
 			console.screen_rows = 99;
 			bbs.menu(strMenu);
 			console.screen_rows = iTemp;
 			continue;
 		}
-			
-		
+
+
 		//display prompt
 		if (bbs.menu.reprompt) {
 			if ((user.settings&USER_EXPERT)||(!bbs.menu.expertprompt)) {
@@ -416,16 +412,16 @@ bbs.menu.show_prompt = function(strMenu,strPrompt,arrOptions,number_max,iAction,
 				sleep(100);
 			}
 			bbs.menu.reprompt = false;
-			
+
 			continue;
 		}
-		
+
 		//If any awaiting messages, display them
 		if (((system.node_list[bbs.node_num-1].misc&NODE_NMSG) != 0)||((system.node_list[bbs.node_num-1].misc&NODE_MSGW) != 0)) {
 			//clear current prompt
 			console.ansi_left(80);
 			console.clearline();
-			
+
 			//display awaiting messages
 			console.print("\1h\1k---\1n\r\n");
 			sleep(500); //sleep before to let any messages finish.
@@ -435,13 +431,13 @@ bbs.menu.show_prompt = function(strMenu,strPrompt,arrOptions,number_max,iAction,
 				sleep(2000); //longer wait after message (sometimes multiple msgs from logon/off).
 			}
 			console.print("\1h\1k---\1n\r\n");
-			
+
 			//set prompt to redraw
 			if (bExpertPrompt)
 				bbs.menu.redraw = true; //expert prompt, prompt in ansi otherwise
 			else
 				bbs.menu.reprompt = true;
-				
+
 			console.pause();
 			continue;
 		}
@@ -449,21 +445,21 @@ bbs.menu.show_prompt = function(strMenu,strPrompt,arrOptions,number_max,iAction,
 		//get input
 		var c = console.inkey().toUpperCase();
 		console.line_counter = 0; //reset line counter, new input.
-		
+
 		//if nothing inputted
 		if (c == "") {
 			//ctrl-c pressed
 			if (bbs.sys_status & SS_ABORT)
 				return "";
-			
+
 			//bbs.menu.checkTimeout(); //check for timeout
-				
+
 			sleep(250);
 			continue;
 		}
 		//bbs.menu.checkTimeout(true); //key entered, reset timeout
-		
-		//test for input changes, and for ?		
+
+		//test for input changes, and for ?
 		switch(c) {
 			//cr or lf - return existing input.
 			case "\r":
@@ -501,7 +497,7 @@ bbs.menu.show_prompt = function(strMenu,strPrompt,arrOptions,number_max,iAction,
 				}
 				break;
 		}
-			
+
 		//check against existing commands
 		var matched = false;
 		var matches = 0;
@@ -509,7 +505,7 @@ bbs.menu.show_prompt = function(strMenu,strPrompt,arrOptions,number_max,iAction,
 			var cmd_tmp = i.toUpperCase();
 			if (cmd_tmp.indexOf(cmd + c) == 0) {
 				matches++; //increment matches count
-				
+
 				//if exact match, and user has hotkeys on.
 				if ((cmd_tmp == cmd+c)&&((user.settings&USER_COLDKEYS)==0))
 					cmd_set = true;
@@ -532,7 +528,7 @@ bbs.menu.show_simple = function(strMenu,strPrompt,arrOptions,iAction,bExpertProm
 	//  does NOT allow for numeric input.
 	//if bExpertPrompt, will ONLY show the prompt for users in expert mode
 	//	ie, the prompt is *IN* the ans/asc file
-	
+
 	//globals to launch an xtrn
 	for (var i=0; i<xtrn_area.sec_list.length; i++) {
 		var xa = xtrn_area.sec_list[i];
@@ -542,26 +538,26 @@ bbs.menu.show_simple = function(strMenu,strPrompt,arrOptions,iAction,bExpertProm
 				arrOptions["="+xp.code] = "bbs.exec_xtrn('"+xp.code+"');";
 		}
 	}
-	
+
 	//globals for jump-points
 	for (i in bbs.menu.jumps)
 		arrOptions['='+i] = (i==bbs.menu.jumpdefault)?"bbs.menu.jumpto='"+i+"';":bbs.menu.jumps[i];
-	
+
 	while (bbs.online) {
 		//set status
 		if (iAction >= 0)
 			system.node_list[bbs.node_num-1].action = iAction;
-		
+
 		//show menu, and get input.
 		var cmd = bbs.menu.show_prompt(strMenu,strPrompt,arrOptions,0,iAction,bExpertPrompt);
 		console.print("\r\n");
 		console.line_counter = 0;
-		
+
 		//ctrl-c pressed
 		if (bbs.sys_status & SS_ABORT) {
 			return;
 		}
-		
+
 		for (i in arrOptions)
 			if (cmd.replace(/^$/,"\r") == i)
 				if (arrOptions[i].indexOf("return") == 0)
@@ -580,7 +576,7 @@ bbs.menu.show_simple = function(strMenu,strPrompt,arrOptions,iAction,bExpertProm
 		system.node_list[bbs.node_num-1].misc|=NODE_UDAT;
 		bbs.nodesync();
 		sleep(100);
-		if (bbs.menu.shell.toUpperCase() != user.command_shell.toUpperCase()) {			
+		if (bbs.menu.shell.toUpperCase() != user.command_shell.toUpperCase()) {
 			//return from menu/shell
 			return;
 		}
@@ -594,7 +590,7 @@ bbs.menu.show_simple = function(strMenu,strPrompt,arrOptions,iAction,bExpertProm
 bbs.menu.jump = function(strDefault) {
 	bbs.menu.jumpto = strDefault;
 	bbs.menu.jumpdefault = strDefault;
-	
+
 	while ((bbs.online)&&(bbs.menu.jumpto != "")) {
 		for (i in bbs.menu.jumps) {
 			if (i.toUpperCase() == bbs.menu.jumpto.toUpperCase()) {
@@ -604,13 +600,13 @@ bbs.menu.jump = function(strDefault) {
 					bbs.menu.jumpto = bbs.menu.jumpdefault;
 			}
 		}
-		
+
 		//ctrl-c pressed
 		if (bbs.sys_status & SS_ABORT) {
 			bbs.sys_status ^= SS_ABORT;
 			return;
 		}
-		
+
 		if (bbs.menu.shell != user.command_shell)
 			return;
 	}
